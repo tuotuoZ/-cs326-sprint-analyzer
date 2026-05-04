@@ -843,10 +843,11 @@
     </style>
   </head>
   <body>
-    <!-- ══ LOCAL-FILE BANNER ══ -->
+    <!-- ══ IFRAME-ONLY BANNER — hidden when served normally ══ -->
     <div
       id="local-banner"
       style="
+        display: none;
         position: fixed;
         top: 0;
         left: 0;
@@ -857,7 +858,6 @@
         padding: 11px 20px;
         font-family: 'IBM Plex Mono', monospace;
         font-size: 12px;
-        display: flex;
         align-items: center;
         gap: 14px;
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
@@ -890,7 +890,16 @@
     </div>
     <div
       id="banner-spacer"
-      style="height: 50px"></div>
+      style="height: 0px"></div>
+    <script>
+      // Only show the iframe warning when actually inside an iframe (e.g. Claude artifact).
+      if (window.self !== window.top) {
+        var b = document.getElementById('local-banner')
+        var s = document.getElementById('banner-spacer')
+        b.style.display = 'flex'
+        s.style.height = '50px'
+      }
+    </script>
 
     <div class="shell">
       <!-- Sidebar -->
